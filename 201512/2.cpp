@@ -1,5 +1,5 @@
 /* 
-*   用时44分
+*   用时 44分
 *   得分 100分
 */
 
@@ -78,6 +78,7 @@ void solve()
             }
             lastColor = map[i][j];
         }
+        //此处处理内层循环退出后剩余的sameCount
         //有超过连续3个的，则mask中记录消除位置
         if (sameCount >= 2)
         {
@@ -87,7 +88,7 @@ void solve()
             }
         }
     }
-    //列遍历map，得到横向可消除的
+    //列遍历map，得到纵向可消除的
     for (int j = 0; j < m; j++)
     {
         lastColor = -1;
@@ -114,6 +115,8 @@ void solve()
             }
             lastColor = map[i][j];
         }
+        //此处处理内层循环退出后剩余的sameCount
+        //有超过连续3个的，则mask中记录消除位置
         if (sameCount >= 2)
         {
             for (int k = 0; k <= sameCount; k++)
