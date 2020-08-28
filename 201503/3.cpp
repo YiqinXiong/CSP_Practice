@@ -17,23 +17,25 @@ bool isRun(int year)
     return !(year % 4) && (year % 100) || !(year % 400);
 }
 
+// 返回y年a月的第一个星期c是a月的第几天（天数从0计算）
 int getFirstDayOfMonth(int y, int a, int c)
 {
     int days = 0;
-    //计算年的天数
+    /*** 计算1850年1月1日到y年a月1日的天数*/
+    // 1.计算1850年1月1日到y年1月1日的天数
     for (int i = 1850; i < y; i++)
     {
         isRun(i) ? days += 366 : days += 365;
     }
-    //计算该年之前月的天数
+    // 2.计算y年1月1日到y年a月1日的天数
     isRun(y) ? month[2] = 29 : month[2] = 28;
     for (int i = 1; i < a; i++)
     {
         days += month[i];
     }
-    //计算a月的第一天是星期几
+    /*** 计算y年a月1日是星期几（从1计算）*/
     int firstDay = (((days % 7) + (2 - 1)) % 7) + 1;
-    //计算a月的第一个星期c是第几天（从0计算）
+    /*** 计算y年a月的第一个星期c是第几天（从0计算）*/
     if (c >= firstDay)
         return c - firstDay;
     return c + 7 - firstDay;
