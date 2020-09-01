@@ -81,10 +81,9 @@ int main()
         vector<string> req;
         vector<int> ans;
         //使用stringstream+getline分割reqLine字符串
-        stringstream ss;
         string reqLine;
         getline(cin, reqLine);
-        ss = stringstream(reqLine);
+        stringstream ss(reqLine);
         string q;
         while (getline(ss, q, ' '))
         {
