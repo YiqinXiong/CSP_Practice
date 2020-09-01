@@ -19,7 +19,37 @@ struct elem
 
 elem docFile[N]; //输入的结构化文档
 
-//查找前代有没有符合条件的查询
+//递归查找前代有没有符合条件的查询
+bool findFather(string &req, int &lineno)
+{
+    // cout << "findFather("
+    //      << req << ", "
+    //      << lineno << ")";
+    //i表示当前行号
+    //先记录当前层号
+    int lev = docFile[lineno].level;
+    //向前遍历，找到父亲
+    for (; lineno >= 0; lineno--)
+    {
+        //找到了父亲
+        if (docFile[lineno].level < lev)
+        {
+            if (docFile[lineno].label == req || docFile[lineno].id == req)
+            {
+                // cout << " return true" << endl;
+                return true;
+            }
+            else
+            {
+                // cout << " return findFather(" << req << ", " << lineno << ")" << endl;
+                return findFather(req, lineno);
+            }
+        }
+    }
+    //没找到父亲
+    // cout << " return false" << endl;
+    return false;
+}
 
 //转大写
 void strToUpper(string &src)
@@ -94,24 +124,46 @@ int main()
             req.push_back(q);
         }
         //查询
-        int lastReqIdx = req.size() - 1;
+
         if (req.size() >= 2)
         {
             //多级查询
-            // for ()
+            for (int j = 0; j < n; j++)
+            {
+                int lastReqIdx = req.size() - 1;
+                //先找到满足最后一个查询条件的行
+                if (docFile[j].label == req[lastReqIdx] || docFile[j].id == req[lastReqIdx])
+                {
+                    // cout << "满足条件的行是：[" << j + 1 << "] " << endl;
+                    int lineno = j;
+                    //逐个向前匹配查询条件
+                    for (lastReqIdx = lastReqIdx - 1; lastReqIdx >= 0; lastReqIdx--)
+                    {
+                        if (!findFather(req[lastReqIdx], lineno))
+                        {
+                            break;
+                        }
+                    }
+                    if (lastReqIdx < 0)
+                    {
+                        ans.push_back(j + 1);
+                    }
+                }
+            }
         }
         else
         {
             //单个查询
             for (int j = 0; j < n; j++)
             {
+                int lastReqIdx = req.size() - 1;
                 if (docFile[j].label == req[lastReqIdx] || docFile[j].id == req[lastReqIdx])
                 {
                     ans.push_back(j + 1);
                 }
             }
         }
-        sort(ans.begin(), ans.end());
+        // sort(ans.begin(), ans.end());   //本身按顺序，不用排序
         cout << ans.size();
         for (vector<int>::iterator it = ans.begin(); it != ans.end(); it++)
         {
