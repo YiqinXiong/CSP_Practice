@@ -1,37 +1,88 @@
-/* 
-*   ç”¨æ—¶ 10åˆ†
-*   å¾—åˆ† 100åˆ†
+/*
+*   ÓÃÊ± 66·Ö
+*   µÃ·Ö 100·Ö
 */
 #include <cstdio>
 #include <iostream>
+#include <list>
 
 using namespace std;
-const int MAX_N = 2005;
-bool arr[MAX_N];
-int N;
+const int MAX_X = 2560, MAX_Y = 1440;
+int mapp[MAX_X][MAX_Y];
+
+int n,m;
+
+struct window
+{
+    int x1,x2,y1,y2;
+    int id;
+    window(int x1,int y1,int x2,int y2,int id):x1(x1),y1(y1),x2(x2),y2(y2),id(id) {}
+};
+
+list<window> allWindow;
+
+void clickMouse(int x,int y)
+{
+    int id = mapp[x][y];
+    list<window>::iterator it;
+    for(it=allWindow.begin(); it!=allWindow.end(); it++)
+    {
+        if(it->id==id)
+        {
+            break;
+        }
+    }
+    if(it==allWindow.end())
+    {
+        printf("IGNORED\n");
+    }
+    else
+    {
+        printf("%d\n",id);
+        //splice½«itËùÖ¸ÔªËØ½ÓºÏµ½endÖ®Ç°
+        allWindow.splice(allWindow.end(),allWindow,it);
+    }
+}
+
+void fillMapp()
+{
+    //ÏÈÒªÇå³ımappÄÚÈİ
+    for(int x=0; x<MAX_X; x++)
+    {
+        for(int y=0; y<MAX_Y; y++)
+        {
+            mapp[x][y] = 0;
+        }
+    }
+    //È»ºóÌî³ämapp
+    list<window>::iterator it;
+    for(it=allWindow.begin(); it!=allWindow.end(); it++)
+    {
+        for(int x=it->x1; x<=it->x2; x++)
+        {
+            for(int y=it->y1; y<=it->y2; y++)
+            {
+                mapp[x][y] = it->id;
+            }
+        }
+    }
+}
 
 int main()
 {
-    int ans = 0;
-    fill(begin(arr), end(arr), false);
-    cin >> N;
-    for (int i = 0; i < N; i++)
+    scanf("%d %d",&n,&m);
+    int x1,x2,y1,y2;
+    int x,y;
+    for(int i=0; i<n; i++)
     {
-        int num;
-        cin >> num;
-        //æŠŠæ•°å­—èŒƒå›´è°ƒæ•´ä¸º[0,2000]
-        num += 1000;
-        arr[num] = true;
+        scanf("%d %d %d %d",&x1,&y1,&x2,&y2);
+        allWindow.push_back(window(x1,y1,x2,y2,i+1));
     }
-    //æ£€ç´¢ç›¸åæ•°
-    int base = 0 + 1000;
-    for (int offset = 1; offset <= 1000; offset++)
+    for(int i=0; i<m; i++)
     {
-        if (arr[base - offset] && arr[base + offset])
-        {
-            ans++;
-        }
+        scanf("%d %d",&x,&y);
+        fillMapp();
+        clickMouse(x,y);
     }
-    cout << ans << endl;
     return 0;
 }
