@@ -1,6 +1,7 @@
 /*
-*   用时 71分
-*   得分 90分
+*   用时 1小时11分->1小时48分
+*   得分 90->100分
+*   90分原因，第105行j+1>oneLine.size()的>要改为>=
 */
 #include <cstdio>
 #include <iostream>
@@ -62,7 +63,7 @@ void fillFormatMap(string str)
             continue;
         }
         string temp = "-";
-        temp+=str[i];
+        temp.append(1, str[i]);
         if(i+1<len&&str[i+1]==':')
         {
             formatMap[temp]=111;    //有参数111
@@ -101,7 +102,7 @@ int main()
         for(int j=0;j<oneLine.size();j++){
             string s = oneLine[j];
             if(formatMap[s]==111){
-                if(j+1>oneLine.size()){
+                if(j+1>=oneLine.size()){
                     break;
                 }
                 if(!testStr(oneLine[j+1])){
