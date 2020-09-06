@@ -1,6 +1,6 @@
 /* 
-*   用时 29分
-*   得分 100分
+*   用时 40分
+*   得分 0分，超时
 */
 #include <cstdio>
 #include <iostream>
