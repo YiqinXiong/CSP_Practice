@@ -3,6 +3,10 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "limits": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "xstring": "cpp",
+        "vector": "cpp",
+        "cstddef": "cpp",
+        "string": "cpp"
     }
 }
