@@ -8,7 +8,7 @@
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/202006/3.exe",
+            "program": "${workspaceFolder}/202006/4new.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
