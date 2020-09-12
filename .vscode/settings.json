@@ -8,6 +8,9 @@
         "vector": "cpp",
         "cstddef": "cpp",
         "string": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "regex": "cpp",
+        "sstream": "cpp",
+        "queue": "cpp"
     }
 }
